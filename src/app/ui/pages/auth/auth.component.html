@@ -1,0 +1,17 @@
+<div class="login-container">
+    <div class="login-form-wrapper">
+        <h1>{{ title }}</h1>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="login-form--full-width">
+                <mat-label>Email</mat-label>
+                <input matInput id="email" type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field class="login-form--full-width">
+                <mat-label>Password</mat-label>
+                <input matInput id="password" type="password" formControlName="password">
+            </mat-form-field>
+            <button mat-stroked-button type="submit" class="login-form--button">Connexion</button>
+        </form>
+    </div>
+</div>
+
