@@ -1,17 +1,17 @@
 export interface DecodedTokenInterface {
   uuid: string | undefined;
   email: string | undefined;
-  iat: string | undefined;
-  exp: string | undefined;
+  iat: number | undefined;
+  exp: number | undefined;
 }
 
 export class DecodedTokenModel implements DecodedTokenInterface {
   protected _uuid: string | undefined;
   protected _email: string | undefined;
-  protected _iat: string | undefined;
-  protected _exp: string | undefined;
+  protected _iat: number | undefined;
+  protected _exp: number | undefined;
 
-  constructor(attributes: { uuid?: string; email?: string; iat?: string; exp?: string }) {
+  constructor(attributes: { uuid?: string; email?: string; iat?: number; exp?: number }) {
     if (attributes.uuid) { this._uuid = attributes.uuid; }
     if (attributes.email) { this._email = attributes.email; }
     if (attributes.iat) { this._iat = attributes.iat; }
@@ -34,19 +34,19 @@ export class DecodedTokenModel implements DecodedTokenInterface {
     this._email = value;
   }
 
-  get iat(): string | undefined {
+  get iat(): number | undefined {
     return this._iat;
   }
 
-  set iat(value: string | undefined) {
+  set iat(value: number | undefined) {
     this._iat = value;
   }
 
-  get exp(): string | undefined {
+  get exp(): number | undefined {
     return this._exp;
   }
 
-  set exp(value: string | undefined) {
+  set exp(value: number | undefined) {
     this._exp = value;
   }
 }

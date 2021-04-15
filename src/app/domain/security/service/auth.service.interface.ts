@@ -1,5 +1,5 @@
-import { DecodedTokenInterface } from '../model/decoded-token.model';
+import { TokenInterface } from '../model/token.model';
 
 export interface AuthServiceInterface {
-  login(email: string, password: string): Promise<DecodedTokenInterface | null>;
+  login(email: string, password: string): Promise<TokenInterface | null>;
 }
