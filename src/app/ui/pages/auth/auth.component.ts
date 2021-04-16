@@ -8,7 +8,7 @@ import { TokenInterface } from '../../../domain/security/model/token.model';
 import { DecodedTokenInterface } from '../../../domain/security/model/decoded-token.model';
 import { UserService } from '../../../infrastructure/security/service/user/user.service';
 import { UserServiceInterface } from '../../../domain/security/service/user.service.interface';
-import {UserInterface, UserModel} from '../../../domain/security/model/user.model';
+import { UserInterface, UserModel } from '../../../domain/security/model/user.model';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +44,10 @@ export class AuthComponent {
   async onSubmit(): Promise<void> {
     const token: TokenInterface | null = await this._authService.login(this.loginForm.value.email, this.loginForm.value.password);
     if (token) {
-      console.log('TITI', this._tokenService.decode(token));
+      await this._tokenService.registerToken(token);
+      const decodedToken: DecodedTokenInterface = this._tokenService.decode(token);
+      const user: UserInterface = new UserModel({ email: decodedToken.email, uuid: decodedToken.uuid });
+      console.log('user', user);
     }
   }
 }
