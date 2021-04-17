@@ -5,14 +5,17 @@ import { AppRoutingModule } from '../../infrastructure/app-routing.module';
 import { MaterialModule } from '../../infrastructure/material/material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableComponent } from './app/table/table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    TableComponent
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    TableComponent
   ],
   imports: [
     FormsModule,
