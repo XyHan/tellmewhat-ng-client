@@ -5,5 +5,7 @@ export interface TokenServiceInterface {
   decode(token: TokenInterface): DecodedTokenInterface;
   registerToken(token: TokenInterface): void;
   removeToken(): void;
-  getToken(): string | null;
+  getToken(): TokenInterface | null;
+  isValidToken(token: TokenInterface): boolean;
+  isExpired(token: TokenInterface): boolean;
 }

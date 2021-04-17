@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TokenInterface } from '../../../../domain/security/model/token.model';
+import {TokenInterface, TokenModel} from '../../../../domain/security/model/token.model';
 import { DecodedTokenInterface, DecodedTokenModel } from '../../../../domain/security/model/decoded-token.model';
 import { TokenServiceInterface } from '../../../../domain/security/service/token.service.interface';
 import { TokenServiceException } from './token.service.exception';
@@ -25,11 +25,10 @@ export class TokenService implements TokenServiceInterface {
       throw new TokenServiceException(`TokenService - registerToken - error: Expired token`);
     }
     try {
-      if (localStorage.getItem('access_token')) {
+      if (localStorage.getItem('access_tmw_token')) {
         this.removeToken();
       }
-      localStorage.setItem('id_token', 'tmwToken');
-      localStorage.setItem('access_token', token.toString());
+      localStorage.setItem('access_tmw_token', token.toString());
     } catch (e) {
       throw new TokenServiceException(`TokenService - registerToken - error: ${e.message}`);
     }
@@ -37,16 +36,16 @@ export class TokenService implements TokenServiceInterface {
 
   public removeToken(): void {
     try {
-      localStorage.removeItem('id_token');
-      localStorage.removeItem('access_token');
+      localStorage.removeItem('access_tmw_token');
     } catch (e) {
       throw new TokenServiceException(`TokenService - registerToken - error: ${e.message}`);
     }
   }
 
-  public getToken(): string | null {
+  public getToken(): TokenInterface | null {
     try {
-      return localStorage.getItem('access_token');
+      const tokenString: string | null = localStorage.getItem('access_tmw_token');
+      return tokenString ? new TokenModel(tokenString) : null;
     } catch (e) {
       throw new TokenServiceException(`TokenService - registerToken - error: ${e.message}`);
     }
@@ -57,7 +56,7 @@ export class TokenService implements TokenServiceInterface {
     return !(base64Url.length < 2 || !base64Url[1]);
   }
 
-  private isExpired(token: TokenInterface): boolean {
+  public isExpired(token: TokenInterface): boolean {
     const decodedToken: DecodedTokenInterface = this.decode(token);
     const timestampNow = Math.floor(new Date().getTime() / 1000);
     return !!(decodedToken.exp && (decodedToken.exp >= timestampNow));

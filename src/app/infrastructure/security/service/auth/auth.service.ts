@@ -50,4 +50,13 @@ export class AuthService implements AuthServiceInterface {
       throw new AuthServiceException(`AuthService - logout - error: ${e.message}`);
     }
   }
+
+  public isAuthenticated(): boolean {
+    try {
+      const token: TokenInterface | null = this._tokenService.getToken();
+      return !(!token || !this._tokenService.isExpired(token) || !this._tokenService.isValidToken(token));
+    } catch (e) {
+      throw new AuthServiceException(`AuthService - isAuthenticated - error: ${e.message}`);
+    }
+  }
 }
