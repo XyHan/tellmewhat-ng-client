@@ -9,7 +9,7 @@ export class UserModel implements  UserInterface {
 
   constructor(attributes?: { email?: string; uuid?: string }) {
     if (attributes?.email) { this._email = attributes.email; }
-    if (attributes?.uuid) { this._email = attributes.uuid; }
+    if (attributes?.uuid) { this._uuid = attributes.uuid; }
   }
 
   get email(): string | undefined {

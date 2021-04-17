@@ -8,8 +8,6 @@ import { TokenServiceInterface } from '../../../../domain/security/service/token
 import { TokenService } from '../token/token.service';
 import { UserService } from '../user/user.service';
 import { UserServiceInterface } from '../../../../domain/security/service/user.service.interface';
-import { DecodedTokenInterface } from '../../../../domain/security/model/decoded-token.model';
-import { UserInterface, UserModel } from '../../../../domain/security/model/user.model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -37,9 +35,7 @@ export class AuthService implements AuthServiceInterface {
     try {
       const token: TokenInterface = await this._securityRepository.getToken(email, password);
       await this._tokenService.registerToken(token);
-      const decodedToken: DecodedTokenInterface = this._tokenService.decode(token);
-      const user: UserInterface = new UserModel({ email: decodedToken.email, uuid: decodedToken.uuid });
-      console.log('user', user);
+      this._userService.setCurrentUser(token);
       await this._router.navigate(['/']);
     } catch (e) {
       throw new AuthServiceException(`AuthService - login - user ${email} error: ${e.message}`);
