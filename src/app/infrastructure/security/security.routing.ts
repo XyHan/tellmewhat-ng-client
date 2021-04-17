@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
-import { AuthComponent } from '../../ui/pages/auth/auth.component';
+import { LoginComponent } from '../../ui/pages/auth/login/login.component';
+import { LogoutComponent } from '../../ui/pages/auth/logout/logout.component';
 
 export const securityRouting: Routes = [
-  { path: 'login', component: AuthComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
 ];

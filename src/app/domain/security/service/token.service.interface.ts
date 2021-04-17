@@ -5,4 +5,5 @@ export interface TokenServiceInterface {
   decode(token: TokenInterface): DecodedTokenInterface;
   registerToken(token: TokenInterface): void;
   removeToken(): void;
+  getToken(): string | null;
 }

@@ -10,7 +10,7 @@ import { TokenServiceException } from './token.service.exception';
 export class TokenService implements TokenServiceInterface {
   public decode(token: TokenInterface): DecodedTokenInterface {
     try {
-      const base64Token = token.token.split('.')[1];
+      const base64Token = token.toString().split('.')[1];
       return Object.assign(DecodedTokenModel, JSON.parse(atob(base64Token)));
     } catch (e) {
       throw new TokenServiceException(`TokenService - decoded - error: ${e.message}`);
@@ -29,7 +29,7 @@ export class TokenService implements TokenServiceInterface {
         this.removeToken();
       }
       localStorage.setItem('id_token', 'tmwToken');
-      localStorage.setItem('access_token', token.token);
+      localStorage.setItem('access_token', token.toString());
     } catch (e) {
       throw new TokenServiceException(`TokenService - registerToken - error: ${e.message}`);
     }
@@ -44,7 +44,7 @@ export class TokenService implements TokenServiceInterface {
     }
   }
 
-  public getToken(token: TokenInterface): string | null {
+  public getToken(): string | null {
     try {
       return localStorage.getItem('access_token');
     } catch (e) {
@@ -53,7 +53,7 @@ export class TokenService implements TokenServiceInterface {
   }
 
   public isValidToken(token: TokenInterface): boolean {
-    const base64Url = token.token.split('.');
+    const base64Url: string[] = token.toString().split('.');
     return !(base64Url.length < 2 || !base64Url[1]);
   }
 

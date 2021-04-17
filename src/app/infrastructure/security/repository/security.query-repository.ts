@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { SecurityQueryRepositoryInterface } from '../../../domain/security/repository/security.query-repository.interface';
 import { TokenInterface, TokenModel } from '../../../domain/security/model/token.model';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import {UserInterface, UserModel} from '../../../domain/security/model/user.model';
 
 @Injectable()
 export class SecurityQueryRepository implements SecurityQueryRepositoryInterface {
@@ -15,37 +14,18 @@ export class SecurityQueryRepository implements SecurityQueryRepositoryInterface
   }
 
   public async getToken(email: string, password: string): Promise<TokenInterface> {
-    return this._clientHttp
-      .post<TokenModel>(
+    const response: TokenInterface = await this._clientHttp
+      .post<TokenInterface>(
         '/api/login',
         { email, password },
         { headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }) }
       )
       .pipe(
-        tap((token: TokenInterface) => console.log('getToken', token.toString())),
-        catchError(this.handleError<TokenInterface>('getToken', new TokenModel('')))
+        catchError(this.handleError<TokenInterface>('getToken', new TokenModel()))
       )
       .toPromise();
-  }
 
-  public async getUser(email: string, token: string): Promise<UserInterface> {
-    return this._clientHttp
-      .get<UserInterface>(
-        `/api/users`,
-        {
-          params: new HttpParams().set('email', email),
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            Authorization: `Bearer ${token}`
-          })
-        }
-      )
-      .pipe(
-        tap((user: UserInterface) => console.log('getUser', user.toString())),
-        catchError(this.handleError<UserInterface>('getUser', new UserModel()))
-      )
-      .toPromise();
+    return new TokenModel(response.token);
   }
 
   /**
