@@ -1,0 +1,20 @@
+.mat-toolbar {
+  background: transparent;
+}
+
+.mat-expansion-panel {
+  border-radius: 0;
+  &:not([class*="mat-elevation-z"]) {
+    box-shadow: inset 0 2px rgba(0, 0, 0, .1);
+  }
+}
+
+.header-spacer {
+  flex: 1 1 auto;
+}
+
+.search-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}

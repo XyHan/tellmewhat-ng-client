@@ -1,0 +1,43 @@
+<mat-toolbar>
+    <span>{{ title }}</span>
+    <span class="header-spacer"></span>
+    <button
+        mat-icon-button
+        matTooltip="Add a ticket"
+        class="example-icon favorite-icon"
+        aria-label="Add a ticket button"
+    >
+        <mat-icon>add</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        matTooltip="Search for a ticket"
+        class="example-icon favorite-icon"
+        aria-label="Search button"
+        (click)="toggleSearchPanel()"
+    >
+        <mat-icon>search</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        matTooltip="Sign out"
+        class="example-icon favorite-icon"
+        aria-label="Sign out button"
+        (click)="logout()"
+    >
+        <mat-icon>logout</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-expansion-panel [expanded]="searchPanelOpen">
+    <form class="search-form">
+        <mat-form-field>
+            <input placeholder="Search" type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</mat-expansion-panel>
+
