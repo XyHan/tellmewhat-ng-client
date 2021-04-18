@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SecurityQueryRepositoryInterface as BaseSecurityQueryRepositoryInterface } from '../../../domain/security/repository/security.query-repository.interface';
 import { TokenInterface, TokenModel } from '../../../domain/security/model/token.model';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { SecurityRepositoryException } from './security.repository.exception';
 
 export interface SecurityQueryRepositoryInterface extends BaseSecurityQueryRepositoryInterface {
   getToken(email: string, password: string): Observable<TokenInterface> ;
@@ -19,12 +20,10 @@ export class SecurityQueryRepository implements SecurityQueryRepositoryInterface
 
   public getToken(email: string, password: string): Observable<TokenInterface> {
     return this._clientHttp
-      .post<TokenInterface>(
-        '/api/login',
-        { email, password },
-      )
+      .post<TokenInterface>('/api/login', { email, password })
       .pipe(
-        map((token: TokenInterface)  => new TokenModel(token.token))
+        map((token: TokenInterface)  => new TokenModel(token.token)),
+        catchError((error) => { throw new SecurityRepositoryException(`SecurityQueryRepository - getToken - ${error.message}`); })
       );
   }
 }

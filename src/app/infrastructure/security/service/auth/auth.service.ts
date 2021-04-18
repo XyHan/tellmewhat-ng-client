@@ -33,21 +33,17 @@ export class AuthService implements AuthServiceInterface {
   }
 
   public async login(email: string, password: string): Promise<void> {
-    try {
-      this._securityRepository.getToken(email, password).subscribe(
-        async (token: TokenInterface) => {
-          this._tokenService.registerToken(token);
-          this._userService.setCurrentUser(token);
-          await this._router.navigate(['/']);
-        },
-        (error: HttpErrorResponse) => {
-          console.error(`AuthService - login - ${error.message}`);
-          return new AuthServiceException(`AuthService - login - user ${email} error: ${error.message}`);
-        }
-      );
-    } catch (e) {
-      throw new AuthServiceException(`AuthService - login - user ${email} error: ${e.message}`);
-    }
+    this._securityRepository.getToken(email, password).subscribe(
+      async (token: TokenInterface) => {
+        this._tokenService.registerToken(token);
+        this._userService.setCurrentUser(token);
+        await this._router.navigate(['/']);
+      },
+      (error: HttpErrorResponse) => {
+        console.error(`AuthService - login - ${error.message}`);
+        return new AuthServiceException(`AuthService - login - user ${email} error: ${error.message}`);
+      }
+    );
   }
 
   public async logout(): Promise<void> {

@@ -1,0 +1,22 @@
+.form-container {
+  min-width: 30vw;
+  p {
+    color: red;
+  }
+  .mat-form-field {
+    margin-top: 16px;
+    display: block;
+  }
+  .mat-stroked-button {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.03);
+    display: block;
+  }
+  .form-loading {
+    margin-top: 20px;
+    color: #c1d2d2;
+    .mat-progress-bar {
+      margin-top: 10px;
+    }
+  }
+}

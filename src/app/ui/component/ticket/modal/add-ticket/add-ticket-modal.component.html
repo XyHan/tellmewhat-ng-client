@@ -1,0 +1,20 @@
+<div class="form-container">
+    <form *ngIf="!isLoading" [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+        <h1>Nouveau ticket</h1>
+        <mat-divider></mat-divider>
+        <mat-form-field>
+            <mat-label>Sujet du ticket</mat-label>
+            <input matInput class="form-control" id="subject" type="text" formControlName="subject">
+        </mat-form-field>
+        <button mat-stroked-button type="submit">Créer</button>
+    </form>
+    <app-error
+            *ngIf="subject.hasError('maxlength')"
+            errorMessage="Le sujet du ticket ne doit pas excéder 255 caractères."
+    ></app-error>
+    <app-error *ngIf="errorMessage" errorMessage="{{ errorMessage }}"></app-error>
+    <div *ngIf="isLoading" class="form-loading">
+        <span>Ticket en cours de création ...</span>
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+    </div>
+</div>

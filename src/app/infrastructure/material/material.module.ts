@@ -10,6 +10,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -25,6 +30,11 @@ import { MatTableModule } from '@angular/material/table';
     MatAutocompleteModule,
     MatOptionModule,
     MatTableModule,
+    MatDialogModule,
+    MatStepperModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ],
   exports: [
     MatToolbarModule,
@@ -38,6 +48,11 @@ import { MatTableModule } from '@angular/material/table';
     MatExpansionModule,
     MatAutocompleteModule,
     MatTableModule,
+    MatDialogModule,
+    MatStepperModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
   ]
 })
 export class MaterialModule { }

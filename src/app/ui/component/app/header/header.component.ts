@@ -1,9 +1,11 @@
-import {Component, Inject, NgIterable, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../../infrastructure/security/service/auth/auth.service';
 import { AuthServiceInterface } from '../../../../domain/security/service/auth.service.interface';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTicketModalComponent } from '../../ticket/modal/add-ticket/add-ticket-modal.component';
 
 export interface User {
   name: string;
@@ -18,6 +20,7 @@ export class HeaderComponent implements OnInit {
   private readonly _title: string;
   private _searchPanelOpen: boolean;
   private readonly _authService: AuthServiceInterface;
+  private readonly _dialog: MatDialog;
 
   myControl = new FormControl();
   options: User[] = [
@@ -27,26 +30,14 @@ export class HeaderComponent implements OnInit {
   ];
   filteredOptions$: Observable<User[] | undefined> = new Observable<User[] | undefined>();
 
-  constructor(@Inject(AuthService) authService: AuthServiceInterface) {
+  constructor(
+    @Inject(AuthService) authService: AuthServiceInterface,
+    dialog: MatDialog
+  ) {
     this._authService = authService;
     this._title = 'Tell me what !';
     this._searchPanelOpen = false;
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  get searchPanelOpen(): boolean {
-    return this._searchPanelOpen;
-  }
-
-  public async logout(): Promise<void> {
-    await this._authService.logout();
-  }
-
-  public toggleSearchPanel(): void {
-    this._searchPanelOpen = !this._searchPanelOpen;
+    this._dialog = dialog;
   }
 
   ngOnInit(): void   {
@@ -58,6 +49,22 @@ export class HeaderComponent implements OnInit {
       );
   }
 
+  get title(): string {
+    return this._title;
+  }
+
+  public async logout(): Promise<void> {
+    await this._authService.logout();
+  }
+
+  get searchPanelOpen(): boolean {
+    return this._searchPanelOpen;
+  }
+
+  public toggleSearchPanel(): void {
+    this._searchPanelOpen = !this._searchPanelOpen;
+  }
+
   displayFn(user: User): string {
     return user && user.name ? user.name : '';
   }
@@ -65,5 +72,13 @@ export class HeaderComponent implements OnInit {
   private _filter(name: string): User[] {
     const filterValue = name.toLowerCase();
     return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  public openAddTicketModal(): void {
+    this._dialog.open(AddTicketModalComponent, {
+      data: {
+        animal: 'panda'
+      }
+    });
   }
 }
