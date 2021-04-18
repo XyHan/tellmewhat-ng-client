@@ -9,6 +9,7 @@ import { TokenService } from '../token/token.service';
 import { UserService } from '../user/user.service';
 import { UserServiceInterface } from '../../../../domain/security/service/user.service.interface';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,17 @@ export class AuthService implements AuthServiceInterface {
 
   public async login(email: string, password: string): Promise<void> {
     try {
-      const token: TokenInterface = await this._securityRepository.getToken(email, password);
-      await this._tokenService.registerToken(token);
-      this._userService.setCurrentUser(token);
-      await this._router.navigate(['/']);
+      this._securityRepository.getToken(email, password).subscribe(
+        async (token: TokenInterface) => {
+          this._tokenService.registerToken(token);
+          this._userService.setCurrentUser(token);
+          await this._router.navigate(['/']);
+        },
+        (error: HttpErrorResponse) => {
+          console.error(`AuthService - login - ${error.message}`);
+          return new AuthServiceException(`AuthService - login - user ${email} error: ${error.message}`);
+        }
+      );
     } catch (e) {
       throw new AuthServiceException(`AuthService - login - user ${email} error: ${e.message}`);
     }
