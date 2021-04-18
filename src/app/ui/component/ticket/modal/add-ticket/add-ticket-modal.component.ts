@@ -5,6 +5,7 @@ import { TicketService } from '../../../../../infrastructure/ticket/service/tick
 import { TicketServiceInterface } from '../../../../../domain/ticket/service/ticket.service.interface';
 import { TicketInterface } from '../../../../../domain/ticket/model/ticket.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-add-modal',
@@ -18,11 +19,13 @@ export class AddTicketModalComponent {
   private _ticketService: TicketServiceInterface;
   private _isLoading: boolean;
   private _errorMessage: string | undefined;
+  private readonly _router: Router;
 
   constructor(
     formBuilder: FormBuilder,
     dialogRef: MatDialogRef<AddTicketModalComponent>,
-    @Inject(TicketService) ticketService: TicketServiceInterface
+    @Inject(TicketService) ticketService: TicketServiceInterface,
+    @Inject(Router) router: Router
   ) {
     this._formBuilder = formBuilder;
     this._dialogRef = dialogRef;
@@ -34,6 +37,7 @@ export class AddTicketModalComponent {
         Validators.maxLength(255)
       ]),
     });
+    this._router = router;
   }
 
   get ticketForm(): FormGroup {
@@ -55,10 +59,10 @@ export class AddTicketModalComponent {
       try {
         this._isLoading = true;
         this._ticketService.addTicket(this._ticketForm.value.subject).subscribe(
-          (ticket: TicketInterface) => {
+          async (ticket: TicketInterface) => {
             this._isLoading = false;
-            console.log('ticket', ticket);
             this._dialogRef.close();
+            await this._router.navigate([`/ticket/${ticket.uuid}`]);
           },
           (error: HttpErrorResponse) => {
             this._isLoading = false;
