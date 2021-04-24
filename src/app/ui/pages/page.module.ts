@@ -6,13 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../infrastructure/material/material.module';
 import { ComponentModule } from '../component/component.module';
 import { TicketComponent } from './ticket/ticket.component';
+import { CustomDatePipe } from '../pipe/custom-date.pipe';
 
 @NgModule({
   declarations: [
     LoginComponent,
     LogoutComponent,
     DashboardComponent,
-    TicketComponent
+    TicketComponent,
+    CustomDatePipe
   ],
   imports: [
     MaterialModule,
