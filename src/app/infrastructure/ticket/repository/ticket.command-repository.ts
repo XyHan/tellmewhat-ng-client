@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 import { TicketRepositoryException } from './ticket.repository.exception';
 
 export interface TicketCommandRepositoryInterface extends BaseTicketCommandRepositoryInterface {
-  addTicket(subject: string): Observable<TicketInterface>;
+  addTicket(subject: string, type: string, project: string): Observable<TicketInterface>;
 }
 
 @Injectable()
@@ -26,11 +26,11 @@ export class TicketCommandRepository implements TicketCommandRepositoryInterface
     this._tokenService = tokenService;
   }
 
-  public addTicket(subject: string): Observable<TicketInterface> {
+  public addTicket(subject: string, type: string, project: string): Observable<TicketInterface> {
     const token: TokenInterface | null = this._tokenService.getToken();
     if (!token || !token.token) { throw new Error(''); }
     return this._clientHttp
-      .post<TicketInterface>('/api/tickets', { subject }, { headers: new HttpHeaders({ Authorization: token.token }) })
+      .post<TicketInterface>('/api/tickets', { subject, type, project }, { headers: new HttpHeaders({ Authorization: token.token }) })
       .pipe(
         catchError((error) => { throw new TicketRepositoryException(error.message); })
       )

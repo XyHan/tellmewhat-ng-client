@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ticket',
@@ -19,8 +19,7 @@ export class TicketComponent implements OnInit {
 
   getTicket(): string {
     const ticketUuid: string | null = this._route.snapshot.paramMap.get('uuid');
-    if (!ticketUuid) return '';
-    console.log('ticketUuid', ticketUuid);
+    if (!ticketUuid) { return ''; }
     return ticketUuid;
   }
 }

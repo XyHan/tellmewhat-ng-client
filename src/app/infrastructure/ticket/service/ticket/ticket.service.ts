@@ -13,8 +13,8 @@ export class TicketService implements TicketServiceInterface {
     this._ticketCommandRepository = ticketCommandRepository;
   }
 
-  public addTicket(subject: string): Observable<TicketInterface> {
+  public addTicket(subject: string, type: string, project: string): Observable<TicketInterface> {
     if (!subject.length) { throw new TicketServiceException('Ticket requires a subject for being created'); }
-    return this._ticketCommandRepository.addTicket(subject);
+    return this._ticketCommandRepository.addTicket(subject, type, project);
   }
 }

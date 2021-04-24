@@ -1,3 +1,3 @@
 export interface TicketCommandRepositoryInterface {
-  addTicket(subject: string): any;
+  addTicket(subject: string, type: string, project: string): any;
 }

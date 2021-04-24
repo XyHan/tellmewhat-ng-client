@@ -7,6 +7,8 @@ export interface TicketInterface {
   updatedBy: string | undefined;
   subject: string | undefined;
   description: string | null | undefined;
+  type: string | undefined;
+  project: string | undefined;
 }
 
 export class TicketModel implements TicketInterface {
@@ -18,6 +20,8 @@ export class TicketModel implements TicketInterface {
   protected _updatedAt: Date | undefined;
   protected _updatedBy: string | undefined;
   protected _uuid: string | undefined;
+  protected _type: string | undefined;
+  protected _project: string | undefined;
 
   get createdAt(): Date | undefined {
     return this._createdAt;
@@ -81,5 +85,21 @@ export class TicketModel implements TicketInterface {
 
   set uuid(value: string | undefined) {
     this._uuid = value;
+  }
+
+  get type(): string | undefined {
+    return this._type;
+  }
+
+  set type(value: string | undefined) {
+    this._type = value;
+  }
+
+  get project(): string | undefined {
+    return this._project;
+  }
+
+  set project(value: string | undefined) {
+    this._project = value;
   }
 }

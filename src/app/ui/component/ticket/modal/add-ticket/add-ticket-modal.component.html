@@ -6,13 +6,26 @@
             <mat-label>Sujet du ticket</mat-label>
             <input matInput class="form-control" id="subject" type="text" formControlName="subject">
         </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="types">
+                <mat-option *ngFor="let type of types" [value]="type.value">
+                    {{ type.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Projet</mat-label>
+            <mat-select formControlName="projects">
+                <mat-option *ngFor="let project of projects" [value]="project.value">
+                    {{ project.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
         <button mat-stroked-button type="submit">Créer</button>
     </form>
-    <app-error
-            *ngIf="subject.hasError('maxlength')"
-            errorMessage="Le sujet du ticket ne doit pas excéder 255 caractères."
-    ></app-error>
-    <app-error *ngIf="errorMessage" errorMessage="{{ errorMessage }}"></app-error>
+    <mat-error *ngIf="subject.hasError('maxlength')">Le sujet du ticket ne doit pas excéder 255 caractères.</mat-error>
+    <mat-error *ngFor="let error of errorMessages">{{ error }}</mat-error>
     <div *ngIf="isLoading" class="form-loading">
         <span>Ticket en cours de création ...</span>
         <mat-progress-bar mode="buffer"></mat-progress-bar>
