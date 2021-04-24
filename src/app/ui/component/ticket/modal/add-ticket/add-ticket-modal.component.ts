@@ -55,7 +55,9 @@ export class AddTicketModalComponent {
     return this._errorMessages;
   }
 
-  get subject(): AbstractControl | null { return this._ticketForm.get('subject'); }
+  get subject(): AbstractControl | null {
+    return this._ticketForm.get('subject');
+  }
 
   get types(): selectType[] {
     return this._types;
@@ -78,28 +80,25 @@ export class AddTicketModalComponent {
 
   public onSubmit(): void {
     if (this._ticketForm.valid) {
-      try {
-        this._isLoading = true;
-        this._ticketService.addTicket(this._ticketForm.value.subject, this._ticketForm.value.types, 'a').subscribe(
-          async (ticket: TicketInterface) => {
-            this._isLoading = false;
-            this._dialogRef.close();
-            await this._router.navigate([`/ticket/${ticket.uuid}`]);
-          },
-          (error: HttpErrorResponse) => {
-            this._isLoading = false;
-            this._errorMessages.push(error.message);
-            console.error(error.message);
-          }
-        );
-      } catch (e) {
-        this._isLoading = false;
-        this._errorMessages.push(e.message);
-        console.error(e.message);
-      }
+      this._isLoading = true;
+      this._ticketService.addTicket(this._ticketForm.value.subject, this._ticketForm.value.types, 'a').subscribe(
+        async (ticket: TicketInterface) => {
+          this._isLoading = false;
+          this._dialogRef.close();
+          await this._router.navigate([`/ticket/${ticket.uuid}`]);
+        },
+        (error: HttpErrorResponse) => {
+          this._isLoading = false;
+          this._errorMessages.push(error.message);
+          console.error(error.message);
+        }
+      );
     }
     if (this._ticketForm.controls.subject.hasError('required')) {
       this._errorMessages.push('Le champ sujet est nécessaire');
+    }
+    if (this._ticketForm.controls.subject.hasError('maxlength')) {
+      this._errorMessages.push('Le sujet du ticket ne doit pas excéder 255 caractères.');
     }
     if (this._ticketForm.controls.types.hasError('required')) {
       this._errorMessages.push('Un type doit être sélectionné');
