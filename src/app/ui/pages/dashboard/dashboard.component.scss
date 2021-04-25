@@ -61,3 +61,27 @@ th.mat-header-cell:first-of-type,
 td.mat-cell:first-of-type {
   padding-left: 3%;
 }
+
+.table-container {
+  position: relative;
+  height: auto;
+  overflow: auto;
+}
+
+.loading-shade {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep {
+  .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #eee !important;
+  }
+}

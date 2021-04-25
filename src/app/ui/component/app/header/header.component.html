@@ -32,12 +32,10 @@
 <mat-expansion-panel [expanded]="searchPanelOpen">
     <form class="search-form">
         <mat-form-field>
-            <input placeholder="Search" type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
-                    {{option.name}}
-                </mat-option>
-            </mat-autocomplete>
+            <input placeholder="Search" type="text" matInput [formControl]="search" (input)="updateTicketList()">
+            <button mat-button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
         </mat-form-field>
     </form>
 </mat-expansion-panel>

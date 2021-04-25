@@ -15,4 +15,10 @@
     max-width: 500px;
     width: 100%;
   }
+  ::ng-deep .mat-form-field {
+    width: 100%;
+  }
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 16px 24px 0;
+  }
 }

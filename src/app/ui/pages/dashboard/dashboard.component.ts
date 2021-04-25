@@ -19,6 +19,7 @@ export class DashboardComponent {
   private _ticketsTableData: TicketInterface[];
   private _ticketsTableTotal: number;
   private _ticketsTablePageEvent: PageEvent | undefined;
+  private _isTicketsTableLoading: boolean;
 
   constructor(@Inject(TicketService) ticketService: TicketServiceInterface) {
     this._ticketsTableColumns = ['status', 'type', 'subject', 'project', 'createdBy', 'updatedAt'];
@@ -26,6 +27,7 @@ export class DashboardComponent {
     this._ticketsTableTotal = 0;
     this._ticketService = ticketService;
     this.listAllTickets(0, 10);
+    this._isTicketsTableLoading = true;
   }
 
   get ticketsTableColumns(): string[] {
@@ -38,6 +40,10 @@ export class DashboardComponent {
 
   get ticketsTableTotal(): number {
     return this._ticketsTableTotal;
+  }
+
+  get isTicketsTableLoading(): boolean {
+    return this._isTicketsTableLoading;
   }
 
   getCurrentPageEvent($event: PageEvent): void {
@@ -57,9 +63,11 @@ export class DashboardComponent {
             return ticket;
           });
           this._ticketsTableTotal = results.total;
+          this._isTicketsTableLoading = false;
         },
         (error: HttpErrorResponse) => {
           console.error(error.message);
+          this._isTicketsTableLoading = false;
         }
       )
     ;

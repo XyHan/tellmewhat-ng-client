@@ -8,6 +8,7 @@ import { ComponentModule } from '../component/component.module';
 import { TicketComponent } from './ticket/ticket.component';
 import { CustomDatePipe } from '../pipe/custom-date.pipe';
 import { SliceStringPipe } from '../pipe/slice-string.pipe';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SliceStringPipe } from '../pipe/slice-string.pipe';
   imports: [
     MaterialModule,
     ComponentModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
 })
 export class PageModule { }
