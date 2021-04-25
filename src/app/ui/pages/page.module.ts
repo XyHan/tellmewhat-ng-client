@@ -7,6 +7,7 @@ import { MaterialModule } from '../../infrastructure/material/material.module';
 import { ComponentModule } from '../component/component.module';
 import { TicketComponent } from './ticket/ticket.component';
 import { CustomDatePipe } from '../pipe/custom-date.pipe';
+import { SliceStringPipe } from '../pipe/slice-string.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CustomDatePipe } from '../pipe/custom-date.pipe';
     LogoutComponent,
     DashboardComponent,
     TicketComponent,
-    CustomDatePipe
+    CustomDatePipe,
+    SliceStringPipe
   ],
   imports: [
     MaterialModule,

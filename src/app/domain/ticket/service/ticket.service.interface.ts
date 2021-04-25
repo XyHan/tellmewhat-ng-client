@@ -4,5 +4,5 @@ import { PaginatedResponse } from '../../shared/interface/paginated-response.int
 
 export interface TicketServiceInterface {
   addTicket(subject: string, type: string, project: string): Observable<TicketInterface>;
-  listAllTickets(page: number, size: number): Observable<PaginatedResponse<TicketInterface>>;
+  listAllTickets(page: number, size: number, sources: string[]): Observable<PaginatedResponse<TicketInterface>>;
 }

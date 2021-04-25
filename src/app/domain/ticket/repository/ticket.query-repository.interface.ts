@@ -1,3 +1,3 @@
 export interface TicketQueryRepositoryInterface {
-  listAll(page: number, size: number): any;
+  listAll(page: number, size: number, sources: string[]): any;
 }

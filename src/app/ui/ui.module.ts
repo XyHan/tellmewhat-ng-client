@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AppModule } from '../infrastructure/app.module';
+import { AppModule } from '../infrastructure/app/app.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './component/app/app.component';
 import { AuthGuard } from './guard/auth.guard';

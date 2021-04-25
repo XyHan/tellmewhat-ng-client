@@ -11,7 +11,7 @@ import { TicketRepositoryException } from './ticket.repository.exception';
 import { PaginatedResponse } from '../../../domain/shared/interface/paginated-response.interface';
 
 export interface TicketQueryRepositoryInterface extends BaseTicketQueryRepositoryInterface {
-  listAll(page: number, size: number): Observable<PaginatedResponse<TicketInterface>>;
+  listAll(page: number, size: number, sources: string[]): Observable<PaginatedResponse<TicketInterface>>;
 }
 
 @Injectable()
@@ -27,12 +27,12 @@ export class TicketQueryRepository implements TicketQueryRepositoryInterface {
     this._tokenService = tokenService;
   }
 
-  public listAll(page: number = 0, size: number = 10): Observable<PaginatedResponse<TicketInterface>> {
+  public listAll(page: number = 0, size: number = 10, sources: string[]): Observable<PaginatedResponse<TicketInterface>> {
     const token: TokenInterface | null = this._tokenService.getToken();
     if (!token || !token.token) { throw new Error(''); }
     return this._clientHttp
       .get<PaginatedResponse<TicketInterface>>(
-        `/api/tickets?page=${page}&size=${size}`,
+        `/api/tickets?page=${page}&size=${size}&sort=DESC&sources=${sources.join(',')}`,
         { headers: new HttpHeaders({ Authorization: token.token })
       })
       .pipe(

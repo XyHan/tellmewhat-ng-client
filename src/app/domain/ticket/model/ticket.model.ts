@@ -1,9 +1,9 @@
 export interface TicketInterface {
   uuid: string | undefined;
-  status: number | undefined;
-  createdAt: Date | undefined;
+  status: number | string | undefined;
+  createdAt: string | undefined;
   createdBy: string | undefined;
-  updatedAt: Date | undefined;
+  updatedAt: string | undefined;
   updatedBy: string | undefined;
   subject: string | undefined;
   description: string | null | undefined;
@@ -12,22 +12,22 @@ export interface TicketInterface {
 }
 
 export class TicketModel implements TicketInterface {
-  protected _createdAt: Date | undefined;
+  protected _createdAt: string | undefined;
   protected _createdBy: string | undefined;
   protected _description: string | null | undefined;
   protected _status: number | undefined;
   protected _subject: string | undefined;
-  protected _updatedAt: Date | undefined;
+  protected _updatedAt: string | undefined;
   protected _updatedBy: string | undefined;
   protected _uuid: string | undefined;
   protected _type: string | undefined;
   protected _project: string | undefined;
 
-  get createdAt(): Date | undefined {
+  get createdAt(): string | undefined {
     return this._createdAt;
   }
 
-  set createdAt(value: Date | undefined) {
+  set createdAt(value: string | undefined) {
     this._createdAt = value;
   }
 
@@ -63,11 +63,11 @@ export class TicketModel implements TicketInterface {
     this._subject = value;
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): string | undefined {
     return this._updatedAt;
   }
 
-  set updatedAt(value: Date | undefined) {
+  set updatedAt(value: string | undefined) {
     this._updatedAt = value;
   }
 

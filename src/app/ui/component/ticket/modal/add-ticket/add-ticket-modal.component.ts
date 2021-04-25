@@ -6,8 +6,8 @@ import { TicketServiceInterface } from '../../../../../domain/ticket/service/tic
 import { TicketInterface } from '../../../../../domain/ticket/model/ticket.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { typeValueObject } from '../../../../../infrastructure/ticket/value-object/type.value-object';
-import { projectValueObject } from '../../../../../infrastructure/ticket/value-object/project.value-object';
+import { TypeValueObject } from '../../../../../infrastructure/ticket/value-object/type.value-object';
+import { ProjectValueObject } from '../../../../../infrastructure/ticket/value-object/project.value-object';
 import { selectType } from '../../../../../domain/shared/type/select.type';
 
 @Component({
@@ -38,8 +38,8 @@ export class AddTicketModalComponent {
     this._isLoading = false;
     this._ticketForm = this.setForm();
     this._router = router;
-    this._types = typeValueObject;
-    this._projects = projectValueObject;
+    this._types = TypeValueObject.getValueObject();
+    this._projects = ProjectValueObject.getValueObject();
     this._errorMessages = [];
   }
 
@@ -81,18 +81,21 @@ export class AddTicketModalComponent {
   public onSubmit(): void {
     if (this._ticketForm.valid) {
       this._isLoading = true;
-      this._ticketService.addTicket(this._ticketForm.value.subject, this._ticketForm.value.types, 'a').subscribe(
-        async (ticket: TicketInterface) => {
-          this._isLoading = false;
-          this._dialogRef.close();
-          await this._router.navigate([`/ticket/${ticket.uuid}`]);
-        },
-        (error: HttpErrorResponse) => {
-          this._isLoading = false;
-          this._errorMessages.push(error.message);
-          console.error(error.message);
-        }
-      );
+      this._ticketService
+        .addTicket(this._ticketForm.value.subject, this._ticketForm.value.types, this._ticketForm.value.projects)
+        .subscribe(
+          async (ticket: TicketInterface) => {
+            this._isLoading = false;
+            this._dialogRef.close();
+            await this._router.navigate([`/ticket/${ticket.uuid}`]);
+          },
+          (error: HttpErrorResponse) => {
+            this._isLoading = false;
+            this._errorMessages.push(error.message);
+            console.error(error.message);
+          }
+        )
+      ;
     }
     if (this._ticketForm.controls.subject.hasError('required')) {
       this._errorMessages.push('Le champ sujet est nécessaire');

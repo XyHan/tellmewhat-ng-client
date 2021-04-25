@@ -25,7 +25,7 @@ export class TicketService implements TicketServiceInterface {
     return this._ticketCommandRepository.addTicket(subject, type, project);
   }
 
-  public listAllTickets(page: number, size: number): Observable<PaginatedResponse<TicketInterface>>{
-    return this._ticketQueryRepository.listAll(page, size);
+  public listAllTickets(page: number, size: number, sources: string[]): Observable<PaginatedResponse<TicketInterface>>{
+    return this._ticketQueryRepository.listAll(page, size, sources);
   }
 }

@@ -4,6 +4,9 @@ import { TicketServiceInterface } from '../../../domain/ticket/service/ticket.se
 import { PageEvent } from '@angular/material/paginator';
 import { TicketInterface } from '../../../domain/ticket/model/ticket.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TypeValueObject } from '../../../infrastructure/ticket/value-object/type.value-object';
+import { ProjectValueObject } from '../../../infrastructure/ticket/value-object/project.value-object';
+import { StatusValueObject } from '../../../infrastructure/app/value-object/status.value-object';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +21,7 @@ export class DashboardComponent {
   private _ticketsTablePageEvent: PageEvent | undefined;
 
   constructor(@Inject(TicketService) ticketService: TicketServiceInterface) {
-    this._ticketsTableColumns = ['status', 'subject', 'createdBy', 'updatedAt'];
+    this._ticketsTableColumns = ['status', 'type', 'subject', 'project', 'createdBy', 'updatedAt'];
     this._ticketsTableData = [];
     this._ticketsTableTotal = 0;
     this._ticketService = ticketService;
@@ -43,14 +46,22 @@ export class DashboardComponent {
   }
 
   private listAllTickets(page: number, size: number): void {
-    this._ticketService.listAllTickets(page, size).subscribe(
-      results => {
-        this._ticketsTableData = results.collection;
-        this._ticketsTableTotal = results.total;
-      },
-      (error: HttpErrorResponse) => {
-        console.error(error.message);
-      }
-    );
+    this._ticketService
+      .listAllTickets(page, size, this._ticketsTableColumns)
+      .subscribe(
+        results => {
+          this._ticketsTableData = results.collection.map((ticket: TicketInterface) => {
+            ticket.status = ticket.status && typeof ticket.status === 'number' ? StatusValueObject.getLabelFromValue(ticket.status) : 'no-data';
+            ticket.type = ticket.type ? TypeValueObject.getLabelFromValue(ticket.type) : 'no data';
+            ticket.project = ticket.project ? ProjectValueObject.getLabelFromValue(ticket.project) : 'no data';
+            return ticket;
+          });
+          this._ticketsTableTotal = results.total;
+        },
+        (error: HttpErrorResponse) => {
+          console.error(error.message);
+        }
+      )
+    ;
   }
 }
