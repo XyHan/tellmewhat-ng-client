@@ -14,8 +14,8 @@ import { DashboardComponent } from '../../../pages/dashboard/dashboard.component
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  private readonly _title: string;
   private readonly _authService: AuthServiceInterface;
+  private readonly _title: string;
   private readonly _dialog: MatDialog;
   private readonly _location: Location;
   private _searchPanelOpen: boolean;

@@ -11,6 +11,7 @@ import { PaginatedResponse } from '../../../../domain/shared/interface/paginated
 export class TicketService implements TicketServiceInterface {
   private readonly _ticketCommandRepository: TicketCommandRepositoryInterface;
   private readonly _ticketQueryRepository: TicketQueryRepositoryInterface;
+  private _search: string | undefined;
 
   constructor(
     @Inject(TicketCommandRepository) ticketCommandRepository: TicketCommandRepositoryInterface,
@@ -25,7 +26,12 @@ export class TicketService implements TicketServiceInterface {
     return this._ticketCommandRepository.addTicket(subject, type, project);
   }
 
-  public listAllTickets(page: number, size: number, sources: string[]): Observable<PaginatedResponse<TicketInterface>>{
-    return this._ticketQueryRepository.listAll(page, size, sources);
+  public listAllTickets(
+    page: number,
+    size: number,
+    sources: string[],
+    filters: Map<string, string>
+  ): Observable<PaginatedResponse<TicketInterface>>{
+    return this._ticketQueryRepository.listAll(page, size, sources, filters);
   }
 }
