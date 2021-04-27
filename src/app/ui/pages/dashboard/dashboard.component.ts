@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TypeValueObject } from '../../../infrastructure/ticket/value-object/type.value-object';
 import { ProjectValueObject } from '../../../infrastructure/ticket/value-object/project.value-object';
 import { StatusValueObject } from '../../../infrastructure/app/value-object/status.value-object';
-import { ActivatedRoute, UrlSerializer, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router, UrlSerializer, UrlTree } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -25,12 +25,14 @@ export class DashboardComponent implements OnInit {
   private readonly _activatedRoute: ActivatedRoute;
   private readonly _location: Location;
   private readonly _urlSerializer: UrlSerializer;
+  private readonly _router: Router;
 
   constructor(
     @Inject(TicketService) ticketService: TicketServiceInterface,
     activatedRoute: ActivatedRoute,
     location: Location,
-    urlSerializer: UrlSerializer
+    urlSerializer: UrlSerializer,
+    router: Router
   ) {
     this._ticketsTableColumns = ['status', 'type', 'subject', 'project', 'createdBy', 'updatedAt'];
     this._ticketsTableData = [];
@@ -40,6 +42,7 @@ export class DashboardComponent implements OnInit {
     this._activatedRoute = activatedRoute;
     this._location = location;
     this._urlSerializer = urlSerializer;
+    this._router = router;
   }
 
   ngOnInit(): void {
@@ -70,9 +73,13 @@ export class DashboardComponent implements OnInit {
     return this._isTicketsTableLoading;
   }
 
-  getCurrentPageEvent($event: PageEvent): void {
+  public getCurrentPageEvent($event: PageEvent): void {
     this._ticketsTablePageEvent = $event;
     this.listAllTickets($event.pageIndex + 1, $event.pageSize, '');
+  }
+
+  public async redirectTo(ticket: TicketInterface): Promise<void> {
+    await this._router.navigate([`/ticket/${ticket.uuid}`]);
   }
 
   private listAllTickets(page: number, size: number, search: string): void {
