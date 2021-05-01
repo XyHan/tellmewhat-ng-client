@@ -6,8 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../infrastructure/material/material.module';
 import { ComponentModule } from '../component/component.module';
 import { TicketComponent } from './ticket/ticket.component';
-import { CustomDatePipe } from '../pipe/custom-date.pipe';
-import { SliceStringPipe } from '../pipe/slice-string.pipe';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -15,9 +13,7 @@ import { CommonModule } from '@angular/common';
     LoginComponent,
     LogoutComponent,
     DashboardComponent,
-    TicketComponent,
-    CustomDatePipe,
-    SliceStringPipe
+    TicketComponent
   ],
   imports: [
     MaterialModule,
@@ -25,5 +21,8 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     CommonModule
   ],
+  exports: [
+    ComponentModule
+  ]
 })
 export class PageModule { }

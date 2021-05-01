@@ -1,0 +1,7 @@
+<article>
+    <p>{{ comment.content }}</p>
+    <footer>
+        <span>{{ comment.createdBy | sliceString:'@':0 }}</span> -
+        <span>{{ comment.updatedAt | customDate: 'mediumDate' }}</span>
+    </footer>
+</article>

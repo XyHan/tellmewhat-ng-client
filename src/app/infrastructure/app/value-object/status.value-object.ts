@@ -3,6 +3,7 @@ export type statusValueObject = { label: string; value: number; };
 export class StatusValueObject {
   public static getValueObject(): statusValueObject[] {
     return [
+      { label: 'Annulé', value: 0 },
       { label: 'Nouveau', value: 1 },
       { label: 'Confirmé', value: 2 },
       { label: 'En cours', value: 3 },
@@ -12,12 +13,20 @@ export class StatusValueObject {
   }
 
   public static getLabelFromValue(value: number): string | undefined {
-    const item: statusValueObject | undefined = this.getValueObject().filter((object: statusValueObject) => object.value === value).shift();
+    const item: statusValueObject | undefined = this.getValueObject()
+      .filter((object: statusValueObject) => object.value === value)
+      .shift()
+    ;
     return item ? item.label : undefined;
   }
 
   public static getValueFromLabel(label: string): number | undefined {
-    const item: statusValueObject | undefined = this.getValueObject().filter((object: statusValueObject) => object.label === label).shift();
+    const item: statusValueObject | undefined = this.getValueObject()
+      .filter((object: statusValueObject) => object.label === label)
+      .values()
+      .next()
+      .value()
+    ;
     return item ? item.value : undefined;
   }
 }

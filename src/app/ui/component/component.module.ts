@@ -6,16 +6,31 @@ import { MaterialModule } from '../../infrastructure/material/material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddTicketModalComponent } from './ticket/modal/add-ticket/add-ticket-modal.component';
+import { CommentComponent } from './ticket/comment/single/comment.component';
+import { CommentListComponent } from './ticket/comment/list/comment-list.component';
+import { CustomDatePipe } from '../pipe/custom-date.pipe';
+import { SliceStringPipe } from '../pipe/slice-string.pipe';
+import { DeleteDialogComponent } from './app/dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AddTicketModalComponent
+    AddTicketModalComponent,
+    CommentListComponent,
+    CommentComponent,
+    CustomDatePipe,
+    SliceStringPipe,
+    DeleteDialogComponent
   ],
   exports: [
     HeaderComponent,
-    AddTicketModalComponent
+    AddTicketModalComponent,
+    CommentListComponent,
+    CommentComponent,
+    CustomDatePipe,
+    SliceStringPipe,
+    DeleteDialogComponent
   ],
   imports: [
     FormsModule,
@@ -23,6 +38,6 @@ import { AddTicketModalComponent } from './ticket/modal/add-ticket/add-ticket-mo
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-  ]
+  ],
 })
 export class ComponentModule { }

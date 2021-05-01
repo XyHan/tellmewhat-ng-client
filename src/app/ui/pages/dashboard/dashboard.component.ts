@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
         results => {
           this._isTicketsTableLoading = true;
           this._ticketsTableData = results.collection.map((ticket: TicketInterface) => {
-            ticket.status = ticket.status && typeof ticket.status === 'number' ? StatusValueObject.getLabelFromValue(ticket.status) : 'no-data';
+            ticket.status = StatusValueObject.getLabelFromValue(Number(ticket.status));
             ticket.type = ticket.type ? TypeValueObject.getLabelFromValue(ticket.type) : 'no data';
             ticket.project = ticket.project ? ProjectValueObject.getLabelFromValue(ticket.project) : 'no data';
             return ticket;

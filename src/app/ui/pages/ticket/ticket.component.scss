@@ -1,3 +1,100 @@
-.dashboard-table {
-  margin-top: 50px;
+.ticket-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  align-content: flex-start;
+  @media screen and (max-width: 960px){
+    flex-direction: column;
+  }
+  .comment-aside {
+    width: 30%;
+    order: 1;
+    @media screen and (max-width: 960px){
+      width: 100%;
+      order: 3;
+    }
+  }
+  section {
+    width: 64%;
+    margin: 0 0.5%;
+    order: 2;
+    @media screen and (max-width: 960px){
+      width: 100%;
+      order: 1;
+    }
+    textarea {
+      width: 99%;
+      padding: 0.8% 0.4%;
+
+      font-family: Roboto, "Helvetica Neue", sans-serif;
+      font-size: 16px;
+
+      border: none;
+      overflow: auto;
+      outline: none;
+
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+
+      resize: none;
+    }
+    ::ng-deep.mat-error {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 0.8% 0.4%;
+    }
+  }
+  .description,
+  .subject,
+  .select-box {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 99%;
+    margin-bottom: 1.5%;
+    textarea {
+      background: transparent;
+    }
+  }
+  .subject {
+    textarea {
+      font-weight: 500;
+    }
+  }
+  .description {
+    textarea {
+      font-weight: 400;
+    }
+  }
+  .select-box {
+    display: flex;
+    flex-direction: row;
+    width: 97%;
+    height: 40px;
+    padding: 0 1%;
+    background-color: rgba(255, 255, 255, 0.5);
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    @media screen and (max-width: 960px){
+      flex-direction: column;
+    }
+    .status,
+    .type,
+    .project {
+      width: 20%;
+      margin-right: auto;
+      margin-left: auto;
+      @media screen and (max-width: 960px){
+        width: 100%;
+      }
+    }
+  }
+  .media-aside {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 5%;
+    order: 3;
+    @media screen and (max-width: 960px){
+      width: 100%;
+      order: 2;
+    }
+  }
 }
