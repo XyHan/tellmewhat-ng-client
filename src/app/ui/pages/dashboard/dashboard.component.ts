@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TicketService } from '../../../infrastructure/ticket/service/ticket/ticket.service';
 import { TicketServiceInterface } from '../../../domain/ticket/service/ticket.service.interface';
 import { PageEvent } from '@angular/material/paginator';
@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TypeValueObject } from '../../../infrastructure/ticket/value-object/type.value-object';
 import { ProjectValueObject } from '../../../infrastructure/ticket/value-object/project.value-object';
 import { StatusValueObject } from '../../../infrastructure/app/value-object/status.value-object';
-import { ActivatedRoute, Router, UrlSerializer, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router, UrlTree } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -24,14 +24,12 @@ export class DashboardComponent implements OnInit {
   private _isTicketsTableLoading: boolean;
   private readonly _activatedRoute: ActivatedRoute;
   private readonly _location: Location;
-  private readonly _urlSerializer: UrlSerializer;
   private readonly _router: Router;
 
   constructor(
     @Inject(TicketService) ticketService: TicketServiceInterface,
     activatedRoute: ActivatedRoute,
     location: Location,
-    urlSerializer: UrlSerializer,
     router: Router
   ) {
     this._ticketsTableColumns = ['status', 'type', 'subject', 'project', 'createdBy', 'updatedAt'];
@@ -41,19 +39,14 @@ export class DashboardComponent implements OnInit {
     this._isTicketsTableLoading = true;
     this._activatedRoute = activatedRoute;
     this._location = location;
-    this._urlSerializer = urlSerializer;
     this._router = router;
   }
 
   ngOnInit(): void {
-    this._activatedRoute.queryParams.subscribe(data => {
-      const search: string = data?.search || '';
-      this.listAllTickets(0, 10, search);
-    });
+    this.listAllTickets(0, 10, this._activatedRoute.snapshot.queryParams.search || '');
     this._location.onUrlChange((url: string) => {
-      const urlAsObject: UrlTree = this._urlSerializer.parse(url);
-      const search: string = urlAsObject.queryParams.search || '';
-      this.listAllTickets(0, 10, search);
+      const urlAsObject: UrlTree = this._router.parseUrl(url);
+      this.listAllTickets(0, 10, urlAsObject.queryParams.search || '');
     });
   }
 
@@ -84,7 +77,7 @@ export class DashboardComponent implements OnInit {
 
   private listAllTickets(page: number, size: number, search: string): void {
     this._ticketService
-      .listAllTickets(page, size, this._ticketsTableColumns, new Map([['search', search]]))
+      .listAllTickets(page, size, this._ticketsTableColumns, new Map([['search', search.trim()]]))
       .subscribe(
         results => {
           this._isTicketsTableLoading = true;

@@ -40,11 +40,11 @@ export class HeaderComponent implements OnInit {
     this._router = router;
   }
 
-  ngOnInit(): void {
-    this._activatedRoute.queryParams.subscribe(data => {
+  async ngOnInit(): Promise<void> {
+    this._activatedRoute.queryParams.subscribe(async data => {
       if (data && data.search) {
         this._search = new FormControl(data.search.trim());
-        this._searchPanelOpen = true;
+        await this.toggleSearchPanel();
       }
     });
   }
@@ -62,11 +62,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public async toggleSearchPanel(): Promise<void> {
-    if (this.isDashboardComponent()) {
-      this._searchPanelOpen = !this._searchPanelOpen;
-    } else {
-      await this._router.navigate(['/'], { queryParams: { search: ' ' }});
-    }
+    this._searchPanelOpen = !this._searchPanelOpen;
   }
 
   get search(): FormControl {
@@ -81,7 +77,11 @@ export class HeaderComponent implements OnInit {
   }
 
   public async updateTicketList(): Promise<void> {
-    this._location.go('', `search=${this.search.value}`);
+    if (this.isDashboardComponent()) {
+      this._location.go('', `search=${this.search.value}`);
+    } else {
+      await this._router.navigate(['/'], { queryParams: { search: this.search.value }});
+    }
   }
 
   public openAddTicketModal(): void {

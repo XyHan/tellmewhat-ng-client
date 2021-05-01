@@ -32,7 +32,8 @@
 <mat-expansion-panel [expanded]="searchPanelOpen">
     <form class="search-form">
         <mat-form-field>
-            <input placeholder="Search" type="text" matInput [formControl]="search" (input)="updateTicketList()">
+            <input *ngIf="isDashboardComponent()" placeholder="Search" type="text" matInput [formControl]="search" (input)="updateTicketList()">
+            <input *ngIf="!isDashboardComponent()" placeholder="Search" type="text" matInput [formControl]="search" (change)="updateTicketList()">
             <button mat-button *ngIf="search.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
                 <mat-icon>close</mat-icon>
             </button>
