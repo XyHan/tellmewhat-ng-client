@@ -7,8 +7,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TypeValueObject } from '../../../infrastructure/ticket/value-object/type.value-object';
 import { ProjectValueObject } from '../../../infrastructure/ticket/value-object/project.value-object';
 import { StatusValueObject } from '../../../infrastructure/app/value-object/status.value-object';
-import { ActivatedRoute, Router, UrlTree } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { PaginatedResponse } from '../../../domain/shared/interface/paginated-response.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,10 +45,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.listAllTickets(0, 10, this._activatedRoute.snapshot.queryParams.search || '');
-    this._location.onUrlChange((url: string) => {
-      const urlAsObject: UrlTree = this._router.parseUrl(url);
-      this.listAllTickets(0, 10, urlAsObject.queryParams.search || '');
-    });
+  }
+
+  public search($event: string): void {
+    this.listAllTickets(0, 10, $event || '');
   }
 
   get ticketsTableColumns(): string[] {
@@ -79,8 +80,7 @@ export class DashboardComponent implements OnInit {
     this._ticketService
       .listAllTickets(page, size, this._ticketsTableColumns, new Map([['search', search.trim()]]))
       .subscribe(
-        results => {
-          this._isTicketsTableLoading = true;
+        (results: PaginatedResponse<TicketInterface>) => {
           this._ticketsTableData = results.collection.map((ticket: TicketInterface) => {
             ticket.status = StatusValueObject.getLabelFromValue(Number(ticket.status));
             ticket.type = ticket.type ? TypeValueObject.getLabelFromValue(ticket.type) : 'no data';

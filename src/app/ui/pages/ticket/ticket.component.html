@@ -1,41 +1,42 @@
 <app-header></app-header>
 <div *ngIf="ticket" class="ticket-container">
-    <aside class="comment-aside">
-        <app-comment-list [_ticketUuid]="ticket.uuid"></app-comment-list>
-    </aside>
     <section>
-        <section class="subject">
-            <textarea
-                placeholder="Résumez-nous le problème !"
-                matTextareaAutosize
-                [formControl]="ticketSubject"
-                (input)="updateTicket()"
-            ></textarea>
-            <mat-error *ngIf="ticketSubject.hasError('required')">Subject cannot be empty</mat-error>
-            <mat-error *ngIf="ticketSubject.hasError('maxlength')">Subject is too long</mat-error>
-        </section>
-        <section class="select-box">
-            <mat-select class="status" [(value)]="ticket.status" [formControl]="ticketStatus" (selectionChange)="updateTicket()">
-                <mat-option *ngFor="let status of statusValues" [value]="status.value">{{ status.label }}</mat-option>
-            </mat-select>
-            <mat-select class="type" [(value)]="ticket.type" [formControl]="ticketType" (selectionChange)="updateTicket()">
-                <mat-option *ngFor="let type of typeValues" [value]="type.value">{{ type.label }}</mat-option>
-            </mat-select>
-            <mat-select class="project" [(value)]="ticket.project" [formControl]="ticketProject" (selectionChange)="updateTicket()">
-                <mat-option *ngFor="let project of projectValues" [value]="project.value">{{ project.label }}</mat-option>
-            </mat-select>
-            <button mat-button (click)="deleteTicket()">Supprimer</button>
-        </section>
-        <section class="description">
+        <article>
+            <header class="subject">
+                <textarea
+                    placeholder="Résumez-nous le problème !"
+                    matTextareaAutosize
+                    [formControl]="ticketSubject"
+                    (input)="updateTicket()"
+                ></textarea>
+                <mat-error *ngIf="ticketSubject.hasError('required')">Subject cannot be empty</mat-error>
+                <mat-error *ngIf="ticketSubject.hasError('maxlength')">Subject is too long</mat-error>
+            </header>
+            <section class="select-box">
+                <mat-select class="status" [(value)]="ticket.status" [formControl]="ticketStatus" (selectionChange)="updateTicket()">
+                    <mat-option *ngFor="let status of statusValues" [value]="status.value">{{ status.label }}</mat-option>
+                </mat-select>
+                <mat-select class="type" [(value)]="ticket.type" [formControl]="ticketType" (selectionChange)="updateTicket()">
+                    <mat-option *ngFor="let type of typeValues" [value]="type.value">{{ type.label }}</mat-option>
+                </mat-select>
+                <mat-select class="project" [(value)]="ticket.project" [formControl]="ticketProject" (selectionChange)="updateTicket()">
+                    <mat-option *ngFor="let project of projectValues" [value]="project.value">{{ project.label }}</mat-option>
+                </mat-select>
+                <button mat-button (click)="deleteTicket()">Supprimer</button>
+            </section>
+            <section class="description">
             <textarea
                 matTextareaAutosize
                 placeholder="Décrivez-nous le problème !"
                 [formControl]="ticketDescription"
                 (input)="updateTicket()"
             ></textarea>
-        </section>
-    </section>
-    <aside class="media-aside">
+            </section>
+            <footer>
+                <span class="created-by">Créé par <b>{{ ticket.createdBy | sliceString:'@':0 }}</b>, le {{ ticket.createdAt | customDate: 'mediumDate' }}</span>
+                <span class="updated-by">Mis à jour par <b>{{ ticket.updatedBy | sliceString:'@':0 }}</b>, le {{ ticket.updatedAt | customDate: 'mediumDate' }}</span>
+            </footer>
+        </article>
         <app-comment-list [_ticketUuid]="ticket.uuid"></app-comment-list>
-    </aside>
+    </section>
 </div>

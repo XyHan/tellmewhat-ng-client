@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../../../infrastructure/security/service/auth/auth.service';
 import { AuthServiceInterface } from '../../../../domain/security/service/auth.service.interface';
 import { FormControl } from '@angular/forms';
@@ -14,6 +14,7 @@ import { DashboardComponent } from '../../../pages/dashboard/dashboard.component
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Output() ticketSearch: EventEmitter<string>;
   private readonly _authService: AuthServiceInterface;
   private readonly _title: string;
   private readonly _dialog: MatDialog;
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
     activatedRoute: ActivatedRoute,
     router: Router,
   ) {
+    this.ticketSearch = new EventEmitter<string>();
     this._authService = authService;
     this._title = 'Tell me what !';
     this._searchPanelOpen = false;
@@ -44,6 +46,7 @@ export class HeaderComponent implements OnInit {
     this._activatedRoute.queryParams.subscribe(async data => {
       if (data && data.search) {
         this._search = new FormControl(data.search.trim());
+        this.ticketSearch.emit(data.search.trim());
         await this.toggleSearchPanel();
       }
     });
@@ -54,7 +57,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public async logout(): Promise<void> {
-    await this._authService.logout();
+    await this._router.navigate(['/logout']);
   }
 
   get searchPanelOpen(): boolean {
@@ -73,12 +76,14 @@ export class HeaderComponent implements OnInit {
     if (this.isDashboardComponent()) {
       this._search = new FormControl();
       this._location.go('');
+      this.ticketSearch.emit('');
     }
   }
 
   public async updateTicketList(): Promise<void> {
     if (this.isDashboardComponent()) {
       this._location.go('', `search=${this.search.value}`);
+      this.ticketSearch.emit(this.search.value);
     } else {
       await this._router.navigate(['/'], { queryParams: { search: this.search.value }});
     }

@@ -98,7 +98,7 @@ export class TicketComponent implements OnInit {
     this._ticketService
       .getOneTicket(ticketUuid)
       .subscribe(
-        results => {
+        (results: TicketInterface) => {
           this._ticket = results;
           this._ticketSubject = new FormControl(this._ticket.subject, [Validators.required, Validators.maxLength(255)]);
           this._ticketDescription = new FormControl(this._ticket.description);

@@ -46,10 +46,9 @@ export class AuthService implements AuthServiceInterface {
     );
   }
 
-  public async logout(): Promise<void> {
+  public logout(): void {
     try {
       this._tokenService.removeToken();
-      await this._router.navigate(['/login']);
     } catch (e) {
       throw new AuthServiceException(`AuthService - logout - error: ${e.message}`);
     }

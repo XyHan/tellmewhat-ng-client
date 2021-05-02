@@ -1,11 +1,30 @@
 import { Inject, Injectable } from '@angular/core';
-import { TicketServiceInterface } from '../../../../domain/ticket/service/ticket.service.interface';
+import { TicketServiceInterface as BaseTicketServiceInterface } from '../../../../domain/ticket/service/ticket.service.interface';
 import { TicketCommandRepository, TicketCommandRepositoryInterface } from '../../repository/ticket/ticket.command-repository';
 import { TicketQueryRepository, TicketQueryRepositoryInterface } from '../../repository/ticket/ticket.query-repository';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TicketInterface } from '../../../../domain/ticket/model/ticket.model';
 import { TicketServiceException } from './ticket.service.exception';
 import { PaginatedResponse } from '../../../../domain/shared/interface/paginated-response.interface';
+
+export interface TicketServiceInterface extends BaseTicketServiceInterface {
+  addTicket(subject: string, type: string, project: string): Observable<TicketInterface>;
+  updateTicket(
+    ticketUuid: string,
+    subject: string,
+    type: string,
+    project: string,
+    description: string | null,
+    status: number
+  ): Observable<TicketInterface>;
+  listAllTickets(
+    page: number,
+    size: number,
+    sources: string[],
+    filters: Map<string, string>
+  ): Observable<PaginatedResponse<TicketInterface>>;
+  getOneTicket(uuid: string): Observable<TicketInterface>;
+}
 
 @Injectable()
 export class TicketService implements TicketServiceInterface {
