@@ -22,7 +22,7 @@
                 <mat-select class="project" [(value)]="ticket.project" [formControl]="ticketProject" (selectionChange)="updateTicket()">
                     <mat-option *ngFor="let project of projectValues" [value]="project.value">{{ project.label }}</mat-option>
                 </mat-select>
-                <button mat-button (click)="deleteTicket()">Supprimer</button>
+                <button class="delete" mat-button (click)="deleteTicket()">Supprimer</button>
             </section>
             <section class="description">
             <textarea
