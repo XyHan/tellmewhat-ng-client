@@ -9,7 +9,6 @@ import { AuthServiceInterface } from '../../../../domain/security/service/auth.s
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  private readonly _title: string;
   private readonly _loginForm: FormGroup;
   private readonly _authService: AuthServiceInterface;
 
@@ -17,13 +16,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     @Inject(AuthService) authService: AuthServiceInterface,
   ) {
-    this._title = 'Tell me what !';
     this._loginForm = this.formBuilder.group({ email: ['', Validators.required], password: ['', Validators.required] });
     this._authService = authService;
-  }
-
-  get title(): string {
-    return this._title;
   }
 
   get loginForm(): FormGroup {

@@ -1,23 +1,113 @@
 .login-container {
+  background-color: #f8f9f6;
   display: grid;
-  justify-content: center;
-  text-align: center;
+  grid-template-columns: [col1] 25% [col2] 50%;
+  grid-template-rows: [row1] 20% [row2] 60%;
+  width: 100%;
   height: 100%;
+  @media (max-width: 1264px) {
+    grid-template-columns: [col1] 15% [col2] 70%;
+    grid-template-rows: [row1] 20% [row2] 60%;
+  }
+  @media (max-width: 960px) {
+    grid-template-columns: [col1] 10% [col2] 80%;
+    grid-template-rows: [row1] 20% [row2] 60%;
+  }
+  @media (max-width: 600px) {
+    display: block;
+  }
   .login-form-wrapper {
-    margin-top: 45%;
-    width: 500px;
+    grid-column: col2;
+    grid-row: row2;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    box-shadow: 0 0 5px #f1f2f7;
+    border-radius: 0 20px 20px 20px;
+    width: 100%;
+    height: 100%;
+    @media (max-width: 600px) {
+      border-radius: 0;
+      flex-wrap: wrap;
+    }
+    aside {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background: center / cover no-repeat url("/assets/img/login/banner.png");
+      width: 45%;
+      height: 100%;
+      border-radius: 0 0 0 20px;
+      span {
+        color: #fff;
+        font-size: 35px;
+        font-weight: 500;
+        text-shadow: 1px 1px rgba(0, 0, 0, 0.9);
+        &:nth-child(2){
+          font-weight: 700;
+        }
+        &:last-child {
+          font-weight: 900;
+        }
+      }
+      @media (max-width: 1904px) {
+        width: 40%;
+      }
+      @media (max-width: 600px) {
+        min-width: 100%;
+        max-height: 66.8%;
+        border-radius: 0;
+      }
+    }
     .login-form {
-      width: 100%;
+      width: 55%;
+      height: 100%;
+      background-color: #fff;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0 20px 0 0;
       &--full-width {
         width: 100%;
       }
       &--button {
-        margin-top: 5%;
+        height: 35px;
+        width: 200px;
+        border-radius: 50px;
+        color: #fff;
+        font-weight: 500;
+        background-color: #23c967;
+        margin-bottom: 20%;
+        @media (max-width: 600px) {
+          width: 100%;
+          height: 70px;
+          margin-top: 7%;
+          border-radius: 0;
+          margin-bottom: 0;
+        }
       }
-    }
-    @media (max-width: 640px) {
-      margin-top: 80%;
-      width: 300px;
+      ::ng-deep.mat-form-field {
+        width: 75%;
+        &:first-child {
+          margin-top: 30%;
+        }
+        @media (max-width: 600px) {
+          align-items: flex-end;
+          margin: 3% 1% 0 1%;
+          width: 95%;
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+      }
+      @media (max-width: 600px) {
+        align-items: flex-end;
+        min-width: 100%;
+        max-height: 30%;
+        padding-top: 7%;
+      }
     }
   }
 }
