@@ -4,11 +4,11 @@
             <span>Tell</span><span>me</span><span>what</span>
         </aside>
         <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="login-form--full-width">
+            <mat-form-field appearance="outline" class="login-form-input">
                 <mat-label>Email</mat-label>
                 <input matInput id="email" type="email" formControlName="email">
             </mat-form-field>
-            <mat-form-field class="login-form--full-width">
+            <mat-form-field appearance="outline" class="login-form-input">
                 <mat-label>Password</mat-label>
                 <input matInput id="password" type="password" formControlName="password">
             </mat-form-field>

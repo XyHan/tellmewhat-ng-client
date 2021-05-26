@@ -1,16 +1,20 @@
 .login-container {
-  background-color: #f8f9f6;
+  background-color: #fff;
   display: grid;
   grid-template-columns: [col1] 25% [col2] 50%;
   grid-template-rows: [row1] 20% [row2] 60%;
   width: 100%;
   height: 100%;
-  @media (max-width: 1264px) {
-    grid-template-columns: [col1] 15% [col2] 70%;
+  @media (max-width: 1440px) {
+    grid-template-columns: [col1] 5% [col2] 90%;
     grid-template-rows: [row1] 20% [row2] 60%;
   }
   @media (max-width: 960px) {
     grid-template-columns: [col1] 10% [col2] 80%;
+    grid-template-rows: [row1] 20% [row2] 60%;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: [col1] 5% [col2] 90%;
     grid-template-rows: [row1] 20% [row2] 60%;
   }
   @media (max-width: 600px) {
@@ -56,12 +60,12 @@
       }
       @media (max-width: 600px) {
         min-width: 100%;
-        max-height: 66.8%;
+        height: 60%;
         border-radius: 0;
       }
     }
     .login-form {
-      width: 55%;
+      width: 60%;
       height: 100%;
       background-color: #fff;
       display: flex;
@@ -69,8 +73,17 @@
       align-items: center;
       justify-content: center;
       border-radius: 0 20px 0 0;
-      &--full-width {
-        width: 100%;
+      .login-form-input {
+        width: 85%;
+        align-self: self-start;
+        &:first-child {
+          margin-top: 30%;
+          margin-bottom: 5%;
+          align-self: self-end;
+          @media (max-width: 600px) {
+            margin-top: 5%;
+          }
+        }
       }
       &--button {
         height: 35px;
@@ -80,33 +93,22 @@
         font-weight: 500;
         background-color: #23c967;
         margin-bottom: 20%;
+        align-self: self-start;
         @media (max-width: 600px) {
           width: 100%;
           height: 70px;
-          margin-top: 7%;
+          margin-top: 0;
           border-radius: 0;
           margin-bottom: 0;
-        }
-      }
-      ::ng-deep.mat-form-field {
-        width: 75%;
-        &:first-child {
-          margin-top: 30%;
-        }
-        @media (max-width: 600px) {
-          align-items: flex-end;
-          margin: 3% 1% 0 1%;
-          width: 95%;
-          &:first-child {
-            margin-top: 0;
-          }
+          align-self: auto;
         }
       }
       @media (max-width: 600px) {
         align-items: flex-end;
         min-width: 100%;
-        max-height: 30%;
-        padding-top: 7%;
+        height: 40%;
+        border-radius: 0;
+        padding-top: 0;
       }
     }
   }

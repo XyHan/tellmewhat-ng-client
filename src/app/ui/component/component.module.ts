@@ -21,7 +21,7 @@ import { DeleteDialogComponent } from './app/dialog/delete-dialog.component';
     CommentComponent,
     CustomDatePipe,
     SliceStringPipe,
-    DeleteDialogComponent
+    DeleteDialogComponent,
   ],
   exports: [
     HeaderComponent,
@@ -30,7 +30,7 @@ import { DeleteDialogComponent } from './app/dialog/delete-dialog.component';
     CommentComponent,
     CustomDatePipe,
     SliceStringPipe,
-    DeleteDialogComponent
+    DeleteDialogComponent,
   ],
   imports: [
     FormsModule,
