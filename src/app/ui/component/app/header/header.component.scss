@@ -1,7 +1,15 @@
 .mat-toolbar {
   background: transparent;
+  border-bottom: 2px solid #eee;
+  color: #fff;
+  a {
+    color: #fff;
+  }
   .header-spacer {
     flex: 1 1 auto;
+  }
+  @media screen and (max-width: 960px){
+    border: none;
   }
 }
 

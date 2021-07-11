@@ -1,5 +1,5 @@
 .login-container {
-  background-color: #fff;
+  background-color: #1f2152;
   display: grid;
   grid-template-columns: [col1] 25% [col2] 50%;
   grid-template-rows: [row1] 20% [row2] 60%;
@@ -26,7 +26,6 @@
     display: flex;
     flex-direction: row;
     background-color: #fff;
-    box-shadow: 0 0 5px #f1f2f7;
     border-radius: 0 20px 20px 20px;
     width: 100%;
     height: 100%;
@@ -83,6 +82,19 @@
           @media (max-width: 600px) {
             margin-top: 5%;
           }
+        }
+      }
+      ::ng-deep.mat-form-field {
+        width: 100%;
+        box-shadow: 0 5px 10px #f1f2f7;
+        .mat-form-field-wrapper {
+          .mat-form-field-outline-start,
+          .mat-form-field-outline-gap,
+          .mat-form-field-outline-end {
+            border: none;
+          }
+          margin: 0;
+          padding-bottom: 0;
         }
       }
       &--button {
